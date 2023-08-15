@@ -92,10 +92,10 @@ public class Order {
        return new OrderBuilder();
     }
 
-    static class OrderBuilder {
-
+    public static class OrderBuilder {
 
         private Order order;
+
 
         public OrderBuilder() {
             order = new Order();
