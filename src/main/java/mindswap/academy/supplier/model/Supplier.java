@@ -2,6 +2,7 @@ package mindswap.academy.supplier.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import mindswap.academy.address.model.Address;
 import mindswap.academy.stock.model.StockRequest;
 
 import java.util.List;
@@ -17,9 +18,11 @@ public class Supplier {
     private int nif;
 
     private int phoneNumber;
-
+    @OneToMany(mappedBy = "supplier")
+    private List<Address> addresses;
     @ManyToMany
     private List<SupplierCategory> categories;
+
 
     @OneToMany
     @JsonIgnore
@@ -72,4 +75,13 @@ public class Supplier {
     public void setCategories(List<SupplierCategory> categories) {
         this.categories = categories;
     }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setAddresses(List<Address> addresses) {
+        this.addresses = addresses;
+    }
+
 }

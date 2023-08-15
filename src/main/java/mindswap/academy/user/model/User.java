@@ -82,4 +82,53 @@ public class User {
     public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
+
+    public static UserBuilder builder(){
+        return new UserBuilder();
+    }
+
+    public static final class UserBuilder{
+        private final User user;
+
+        UserBuilder(){
+            user = new User();
+        }
+
+        public UserBuilder withEmail(String email){
+            user.setEmail(email);
+            return this;
+        }
+
+        public UserBuilder withId(Long id){
+            user.setId(id);
+            return this;
+        }
+
+        public UserBuilder withNif(int nif){
+            user.setNif(nif);
+            return this;
+        }
+
+        public UserBuilder withPhoneNumber(int phoneNumber){
+            user.setPhoneNumber(phoneNumber);
+            return this;
+        }
+        public UserBuilder withCitizenCard(String citizenCard){
+            user.setCitizenCard(citizenCard);
+            return this;
+        }
+
+        public UserBuilder withAddress(List<Address> addresses){
+            user.setAddresses(addresses);
+            return this;
+        }
+        public UserBuilder withOrders(List<Order> orders){
+            user.setOrders(orders);
+            return this;
+        }
+
+        public User build(){
+            return user;
+        }
+    }
 }
