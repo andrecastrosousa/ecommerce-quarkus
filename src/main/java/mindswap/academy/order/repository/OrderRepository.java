@@ -1,4 +1,4 @@
-package mindswap.academy.repository;
+package mindswap.academy.order.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
