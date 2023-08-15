@@ -15,10 +15,17 @@ public class OrderConverter {
     ObjectMapper objectMapper;
 
     public OrderDto toDto(Order order){
-        return null;
+        return objectMapper.convertValue(order, OrderDto.class);
     }
 
     public Order fromOrderCreateDto(OrderCreateDto orderCreateDto){
-        return null;
+        return Order.builder()
+                .withTotal(0.0)
+                .withDate(orderCreateDto.getOrderDatetime())
+                .withItems(null)
+                .withUser(null)
+                .withShipping(null)
+                .withPaymentMethod(null)
+                .build();
     }
 }
