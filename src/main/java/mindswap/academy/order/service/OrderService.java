@@ -31,19 +31,19 @@ public class OrderService {
        return orderDtos;
     }
 
-    public OrderDto getById(Long orderId) {
+    public OrderDto getById( Long orderId) {
         Order order = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not Found", 404));
         return orderConverter.toDto(order);
     }
 
-    public OrderDto create(OrderCreateDto orderCreateDto) {
+    public OrderDto create( OrderCreateDto orderCreateDto) {
         Order order = orderConverter.fromOrderCreateDto(orderCreateDto);
         orderRepository.persist(order);
         return orderConverter.toDto(order);
     }
 
-    public void delete(Long orderId) {
+    public void delete( Long orderId) {
         Order order = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not Found", 404));
         orderRepository.delete(order);
@@ -61,9 +61,7 @@ public class OrderService {
         if(!(orderUpdatedDto.getTotal() == existingOrder.getTotal())) {
             throw new WebApplicationException("Order price can not be changed", 400);
         }
-        if(!(orderUpdatedDto.getOrderDatetime() == existingOrder.getOrderDatetime())) {
-            throw new WebApplicationException("Order date can not be changed", 400);
-        }
+        existingOrder.setOrderDatetime(orderUpdatedDto.getOrderDatetime());
         existingOrder.setShipping(orderUpdatedDto.getShipping());
         orderRepository.persist(existingOrder);
         return orderConverter.toDto(existingOrder);
