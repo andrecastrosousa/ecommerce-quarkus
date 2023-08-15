@@ -1,4 +1,4 @@
-package mindswap.academy.resource;
+package mindswap.academy.order.resource;
 
 
 import com.oracle.svm.core.annotate.Delete;
@@ -6,9 +6,9 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
-import mindswap.academy.dto.OrderCreateDto;
-import mindswap.academy.dto.OrderDto;
-import mindswap.academy.service.OrderService;
+import mindswap.academy.order.dto.OrderCreateDto;
+import mindswap.academy.order.dto.OrderDto;
+import mindswap.academy.order.service.OrderService;
 
 import java.util.List;
 

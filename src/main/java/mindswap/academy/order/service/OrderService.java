@@ -1,14 +1,14 @@
-package mindswap.academy.service;
+package mindswap.academy.order.service;
 
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
-import mindswap.academy.converter.OrderConverter;
-import mindswap.academy.dto.OrderCreateDto;
-import mindswap.academy.dto.OrderDto;
+import mindswap.academy.order.converter.OrderConverter;
+import mindswap.academy.order.dto.OrderCreateDto;
+import mindswap.academy.order.dto.OrderDto;
 import mindswap.academy.model.Order;
-import mindswap.academy.repository.OrderRepository;
+import mindswap.academy.order.repository.OrderRepository;
 
 import java.util.List;
 
