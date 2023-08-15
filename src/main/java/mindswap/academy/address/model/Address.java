@@ -1,9 +1,8 @@
 package mindswap.academy.address.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import mindswap.academy.user.model.User;
 
 @Entity
 public class Address {
@@ -14,6 +13,10 @@ public class Address {
     private String zipCode;
     private String city;
     private String country;
+
+    @ManyToOne
+    @JsonIgnore
+    private User user;
 
     public Long getId() {
         return id;
@@ -53,5 +56,13 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -6,26 +6,47 @@ import mindswap.academy.payment.model.PaymentMethod;
 import mindswap.academy.shipping.model.Shipping;
 import mindswap.academy.user.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
+import static jakarta.persistence.GenerationType.IDENTITY;
+
+@Entity(name = "Orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
-
     private double total;
+    private LocalDateTime orderDatetime;
 
-    @OneToMany
-    private List<OrderItem> items;
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private List<OrderItem> orderItems;
 
     @ManyToOne
     @JsonIgnore
     private User user;
 
+    @OneToOne
     private Shipping shipping;
 
+    @ManyToOne
     private PaymentMethod paymentMethod;
+
+    public LocalDateTime getOrderDatetime() {
+        return orderDatetime;
+    }
+
+    public void setOrderDatetime(LocalDateTime orderDatetime) {
+        this.orderDatetime = orderDatetime;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Long getId() {
         return id;
@@ -43,20 +64,12 @@ public class Order {
         this.total = total;
     }
 
-    public List<OrderItem> getItems() {
-        return items;
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
     }
 
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public Shipping getShipping() {

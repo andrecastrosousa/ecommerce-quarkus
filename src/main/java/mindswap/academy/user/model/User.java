@@ -1,9 +1,6 @@
 package mindswap.academy.user.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import mindswap.academy.address.model.Address;
 import mindswap.academy.order.model.Order;
 
@@ -13,6 +10,7 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     private String email;
@@ -23,9 +21,11 @@ public class User {
 
     private String citizenCard;
 
-    private List<Address> addresses;
-
+    @OneToMany(mappedBy = "user")
     private List<Order> orders;
+
+    @OneToMany(mappedBy = "user")
+    private List<Address> addresses;
 
     public Long getId() {
         return id;

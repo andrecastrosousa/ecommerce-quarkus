@@ -1,12 +1,16 @@
 package mindswap.academy.shipping.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import mindswap.academy.address.model.Address;
+import mindswap.academy.order.model.Order;
+
+import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 public class Shipping {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     @OneToOne
@@ -14,6 +18,10 @@ public class Shipping {
 
     @ManyToOne
     private ShippingType type;
+
+    @OneToOne
+    @JsonIgnore
+    private Order order;
 
     public Long getId() {
         return id;
@@ -37,5 +45,13 @@ public class Shipping {
 
     public void setType(ShippingType type) {
         this.type = type;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
