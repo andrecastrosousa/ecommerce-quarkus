@@ -2,6 +2,7 @@ package mindswap.academy.address.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import mindswap.academy.supplier.model.Supplier;
 import mindswap.academy.user.model.User;
 
 @Entity
@@ -13,7 +14,9 @@ public class Address {
     private String zipCode;
     private String city;
     private String country;
-
+    @ManyToOne
+    @JsonIgnore
+    private Supplier supplier;
     @ManyToOne
     @JsonIgnore
     private User user;
