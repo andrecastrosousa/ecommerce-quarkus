@@ -31,19 +31,19 @@ public class OrderService {
        return orderDtos;
     }
 
-    public OrderDto getById( Long orderId) {
+    public OrderDto getById(Long orderId) {
         Order order = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not Found", 404));
         return orderConverter.toDto(order);
     }
 
-    public OrderDto create( OrderCreateDto orderCreateDto) {
+    public OrderDto create(OrderCreateDto orderCreateDto) {
         Order order = orderConverter.fromOrderCreateDto(orderCreateDto);
         orderRepository.persist(order);
         return orderConverter.toDto(order);
     }
 
-    public void delete( Long orderId) {
+    public void delete(Long orderId) {
         Order order = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not Found", 404));
         orderRepository.delete(order);
