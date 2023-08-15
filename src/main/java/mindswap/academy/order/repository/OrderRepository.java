@@ -6,5 +6,6 @@ import mindswap.academy.order.model.Order;
 
 
 @ApplicationScoped
-public class OrderRepository  implements PanacheRepository<Order> {
+public class OrderRepository implements PanacheRepository<Order> {
+
 }
