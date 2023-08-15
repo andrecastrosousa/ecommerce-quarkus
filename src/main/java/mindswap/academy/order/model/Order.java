@@ -87,4 +87,53 @@ public class Order {
     public void setPaymentMethod(PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
+
+    public static OrderBuilder builder(){
+       return new OrderBuilder();
+    }
+
+    static class OrderBuilder {
+
+
+        private Order order;
+
+        public OrderBuilder() {
+            order = new Order();
+        }
+
+        public OrderBuilder withTotal(double total){
+            order.setTotal(total);
+            return this;
+        }
+
+        public OrderBuilder withDate(LocalDateTime localDateTime){
+            order.setOrderDatetime(localDateTime);
+            return this;
+        }
+
+        public OrderBuilder withItems(List<OrderItem> orderItems){
+            order.setOrderItems(orderItems);
+            return this;
+        }
+
+        public OrderBuilder withUser(User user){
+            order.setUser(user);
+            return this;
+        }
+
+        public OrderBuilder withShipping(Shipping shipping){
+            order.setShipping(shipping);
+            return this;
+        }
+
+        public OrderBuilder withPaymentMethod(PaymentMethod paymentMethod){
+            order.setPaymentMethod(paymentMethod);
+            return this;
+        }
+
+        public Order build(){
+            return order;
+        }
+
+    }
 }
