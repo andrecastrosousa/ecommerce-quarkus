@@ -6,7 +6,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderDto;
+
 import mindswap.academy.order.dto.OrderUpdatedDto;
+
 import mindswap.academy.order.model.Order;
 
 @ApplicationScoped

@@ -4,6 +4,7 @@ import com.thoughtworks.xstream.core.util.OrderRetainingMap;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderUpdatedDto;
 import mindswap.academy.order.repository.OrderRepository;
@@ -22,6 +23,7 @@ class OrderResourceTest {
 
     @Inject
     OrderRepository orderRepository;
+
 
     OrderCreateDto orderCreateDto = new OrderCreateDto(LocalDateTime.now());
 
@@ -148,6 +150,7 @@ class OrderResourceTest {
             LocalDateTime dateTime = date.atStartOfDay();
             orderUpdatedDto.setOrderDatetime(dateTime);
 
+
             given()
                     .header("Content-Type", "application/json")
                     .body(orderUpdatedDto)
@@ -156,6 +159,14 @@ class OrderResourceTest {
                     .statusCode(400);
         }
 
+    @BeforeEach
+    @Transactional
+    public void setUp(){
+        orderRepository.deleteAll();
+        orderRepository.getEntityManager()
+                .createNativeQuery("ALTER TABLE Orders AUTO_INCREMENT = 1")
+                .executeUpdate();
+    }
 
     }
 
