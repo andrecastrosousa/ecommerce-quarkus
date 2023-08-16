@@ -16,6 +16,19 @@ public class OrderUpdatedDto {
     private Shipping shipping;
     private PaymentMethod paymentMethod;
 
+
+    public OrderUpdatedDto() {
+    }
+
+    public OrderUpdatedDto(Long id, double total, LocalDateTime orderDatetime, List<OrderItem> orderItems, Shipping shipping, PaymentMethod paymentMethod) {
+        this.id = id;
+        this.total = total;
+        this.orderDatetime = orderDatetime;
+        this.orderItems = orderItems;
+        this.shipping = shipping;
+        this.paymentMethod = paymentMethod;
+    }
+
     public Long getId() {
         return id;
     }

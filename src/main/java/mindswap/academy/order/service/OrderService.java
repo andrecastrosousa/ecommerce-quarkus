@@ -61,7 +61,9 @@ public class OrderService {
         if(!(orderUpdatedDto.getTotal() == existingOrder.getTotal())) {
             throw new WebApplicationException("Order price can not be changed", 400);
         }
-        existingOrder.setOrderDatetime(orderUpdatedDto.getOrderDatetime());
+        if(!(orderUpdatedDto.getOrderDatetime() == existingOrder.getOrderDatetime())) {
+            throw new WebApplicationException("Order date can not be changed", 400);
+        }
         existingOrder.setShipping(orderUpdatedDto.getShipping());
         orderRepository.persist(existingOrder);
         return orderConverter.toDto(existingOrder);
