@@ -8,7 +8,7 @@ import mindswap.academy.authentication.dto.AuthRegisterDto;
 public interface AuthenticationService {
     AuthDto login(AuthLoginDto authLoginDto);
 
-    void register(AuthRegisterDto authRegisterDto);
+    AuthDto register(AuthRegisterDto authRegisterDto);
 
     void forgotPassword(AuthForgotPasswordDto authForgotPasswordDto);
 }
