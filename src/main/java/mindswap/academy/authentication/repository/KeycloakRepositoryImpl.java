@@ -35,7 +35,7 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @PostConstruct
     public void initKeycloak() {
         keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:8080")
+                .serverUrl("http://localhost:8081")
                 .realm(realm)
                 .clientId(clientId)
                 .grantType(grantType)
