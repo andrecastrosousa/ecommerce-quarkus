@@ -14,6 +14,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Inject
     UserRepository userRepository;
 
+    @Inject
+    KeycloakManagerImpl keycloakManagerImpl;
+
     @Override
     public AuthDto login(AuthLoginDto authLoginDto) {
         return null;
