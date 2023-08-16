@@ -1,6 +1,7 @@
 package mindswap.academy.item.model;
 
 import jakarta.persistence.*;
+import mindswap.academy.item.dto.ItemCreateDto;
 
 import java.util.List;
 
@@ -9,8 +10,9 @@ public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
 
-    private double price;
+    private Double price;
 
     private String description;
 
@@ -26,6 +28,14 @@ public class Item {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getPrice() {
@@ -59,4 +69,38 @@ public class Item {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+    public static ItemBuilder builder(){
+        return new ItemBuilder();
+    }
+
+    public static final class ItemBuilder{
+        private final Item item;
+
+        public ItemBuilder() {
+            item = new Item();
+        }
+
+        public ItemBuilder withName(String name){
+            item.setName(name);
+            return this;
+        }
+        public ItemBuilder withPrice(Double price){
+            item.setPrice(price);
+            return this;
+        }
+        public ItemBuilder withDescription(String description){
+            item.setDescription(description);
+            return this;
+        }
+        public ItemBuilder withCategory(List<ItemCategory> categories){
+            item.setCategories(categories);
+            return this;
+        }
+        public Item build(){
+            return item;
+        }
+
+    }
+
 }
