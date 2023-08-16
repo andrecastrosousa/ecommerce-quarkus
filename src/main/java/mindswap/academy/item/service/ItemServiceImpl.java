@@ -7,6 +7,8 @@ import mindswap.academy.item.converter.ItemConverter;
 import mindswap.academy.item.dto.ItemCreateDto;
 import mindswap.academy.item.dto.ItemDto;
 import mindswap.academy.item.model.Item;
+import mindswap.academy.item.model.ItemCategory;
+import mindswap.academy.item.repository.ItemCategoryRepository;
 import mindswap.academy.item.repository.ItemRepository;
 
 import java.util.List;
@@ -16,6 +18,8 @@ public class ItemServiceImpl implements ItemService{
     ItemRepository itemRepository;
     @Inject
     ItemConverter itemConverter;
+    @Inject
+    ItemCategoryRepository itemCategoryRepository;
 
     @Override
     public List<Item> getAll() {
@@ -66,5 +70,20 @@ public class ItemServiceImpl implements ItemService{
     public void deleteById(Long id) {
         Item item = getById(id);
         itemRepository.delete(item);
+    }
+    @Override
+    public ItemCategory createItemCategory(String name){
+        ItemCategory itemCategory = new ItemCategory(name);
+        itemCategoryRepository.persist(itemCategory);
+        return itemCategory;
+    }
+
+    @Override
+    public void deleteCategory(String name) {
+        ItemCategory existingItemCategory = itemCategoryRepository
+                .find("name", name)
+                .firstResultOptional()
+                .orElseThrow(()->new WebApplicationException("Item category doesn't exist",400));
+        itemCategoryRepository.delete(existingItemCategory);
     }
 }

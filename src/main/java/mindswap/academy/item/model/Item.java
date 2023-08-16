@@ -5,7 +5,7 @@ import mindswap.academy.item.dto.ItemCreateDto;
 
 import java.util.List;
 
-@Entity
+@Entity(name = "Items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

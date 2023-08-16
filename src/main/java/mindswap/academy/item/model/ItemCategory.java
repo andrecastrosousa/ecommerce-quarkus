@@ -28,4 +28,11 @@ public class ItemCategory {
     public void setName(String name) {
         this.name = name;
     }
+
+    public ItemCategory() {
+    }
+
+    public ItemCategory(String name) {
+        this.name = name;
+    }
 }
