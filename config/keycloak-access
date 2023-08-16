@@ -1,0 +1,5 @@
+keycloack.realm=quarkus
+keycloack.clientId=backend-service
+keycloack.grantType=password
+keycloack.username=admin
+keycloack.password=admin
