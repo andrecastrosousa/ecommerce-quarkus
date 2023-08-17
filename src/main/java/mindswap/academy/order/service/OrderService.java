@@ -52,19 +52,10 @@ public class OrderService {
     public OrderDto update(Long orderId, OrderUpdatedDto orderUpdatedDto) {
         Order existingOrder = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not found", 404));
-        if(!orderUpdatedDto.getOrderItems().equals(existingOrder.getOrderItems())){
-            throw new WebApplicationException("Order items can not be changed", 400);
+        if(!orderUpdatedDto.getId().equals(existingOrder.getId())){
+            throw new WebApplicationException("Id can not be changed", 400);
         }
-        if(!orderUpdatedDto.getPaymentMethod().equals(existingOrder.getPaymentMethod())){
-            throw new WebApplicationException("Order payment can not be changed", 400);
-        }
-        if(!(orderUpdatedDto.getTotal() == existingOrder.getTotal())) {
-            throw new WebApplicationException("Order price can not be changed", 400);
-        }
-        if(!(orderUpdatedDto.getOrderDatetime() == existingOrder.getOrderDatetime())) {
-            throw new WebApplicationException("Order date can not be changed", 400);
-        }
-        existingOrder.setShipping(orderUpdatedDto.getShipping());
+        existingOrder.setOrderDatetime(orderUpdatedDto.getOrderDatetime());
         orderRepository.persist(existingOrder);
         return orderConverter.toDto(existingOrder);
     }
