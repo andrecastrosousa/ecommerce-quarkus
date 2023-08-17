@@ -32,8 +32,8 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @ConfigProperty(name = "keycloak.password")
     private String password;
 
-    @ConfigProperty(name = "keycloak.secret")
-    private String secret;
+    private String serverUrl = "http://localhost:8081/";
+
 
     @Inject
     private Keycloak keycloak;
@@ -41,10 +41,9 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @PostConstruct
     public void initKeycloak() {
         keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:53886/")
-                .realm("master")
+                .serverUrl(serverUrl)
+                .realm(realm)
                 .clientId(clientId)
-                .clientSecret(secret)
                 .grantType(grantType)
                 .username(username)
                 .password(password)
@@ -58,7 +57,7 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
 
     @Override
     public String createAuthentication(UserRepresentation userRepresentation, String password) {
-        UsersResource usersResource = keycloak.realm(realm).users();
+        UsersResource usersResource = keycloak.realm("quarkus").users();
 
         userRepresentation.setEnabled(true);
 
@@ -80,10 +79,11 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @Override
     public Auth login(Auth auth) {
         Keycloak keycloak1 = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:53886/")
+                .serverUrl(serverUrl)
                 .realm("quarkus")
                 .clientId(clientId)
                 .grantType(grantType)
+                .scope("openid")
                 .username(auth.getEmail())
                 .password(auth.getPassword())
                 .build();
