@@ -10,7 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderDto;
 import mindswap.academy.order.dto.OrderUpdatedDto;
-import mindswap.academy.order.service.OrderService;
+import mindswap.academy.order.service.OrderServiceImp;
 
 import java.util.List;
 
@@ -18,18 +18,18 @@ import java.util.List;
 public class OrderResource {
 
     @Inject
-    OrderService orderService;
+    OrderServiceImp orderServiceImp;
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<OrderDto> getAll(){
-        return orderService.getAll();
+        return orderServiceImp.getAll();
     }
 
     @GET
     @Path("/{orderId}")
     @Produces(MediaType.APPLICATION_JSON)
     public OrderDto getById(@PathParam("orderId") Long orderId){
-        return orderService.getById(orderId);
+        return orderServiceImp.getById(orderId);
     }
 
     @POST
@@ -38,14 +38,14 @@ public class OrderResource {
     @Transactional
     //Nao posso esquecer de meter  @Valid
     public OrderDto post(@Valid OrderCreateDto orderCreateDto){
-        return orderService.create(orderCreateDto);
+        return orderServiceImp.create(orderCreateDto);
     }
 
     @Delete
     @Path("{orderId}")
     @Transactional
     public void delete( @PathParam("orderId") Long orderId){
-        orderService.delete(orderId);
+        orderServiceImp.delete(orderId);
     }
 
     @PUT
@@ -54,6 +54,6 @@ public class OrderResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public OrderDto put(@PathParam("orderId") Long orderId, OrderUpdatedDto orderUpdatedDto) {
-        return orderService.update(orderId, orderUpdatedDto);
+        return orderServiceImp.update(orderId, orderUpdatedDto);
     }
 }
