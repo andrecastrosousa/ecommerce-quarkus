@@ -20,6 +20,6 @@ public class AuthenticationResourceTest {
                 .when()
                 .post("/register")
                 .then()
-                .statusCode(200);
+                .statusCode(204);
     }
 }
