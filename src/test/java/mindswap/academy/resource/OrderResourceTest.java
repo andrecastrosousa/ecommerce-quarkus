@@ -120,7 +120,8 @@ class OrderResourceTest {
             // Esta a dar error por causa do orderUpdate nao ter id, e se meter tem de ser long
             LocalDate date = LocalDate.parse("2023-03-10");
             LocalDateTime dateTime = date.atStartOfDay();
-            //mudar o shipping e a unica coisa que posso fazer!
+            orderUpdatedDto.setOrderDatetime(dateTime);
+            orderUpdatedDto.setId(1L);
 
             given()
                     .header("Content-Type", "application/json")
@@ -143,10 +144,7 @@ class OrderResourceTest {
 
             OrderUpdatedDto orderUpdatedDto = new OrderUpdatedDto();
 
-            // Esta a dar error por causa do orderUpdate nao ter id, e se meter tem de ser long
-            LocalDate date = LocalDate.parse("2023-03-12");
-            LocalDateTime dateTime = date.atStartOfDay();
-            orderUpdatedDto.setOrderDatetime(dateTime);
+            orderUpdatedDto.setId(2L);
 
             given()
                     .header("Content-Type", "application/json")
@@ -155,7 +153,6 @@ class OrderResourceTest {
                     .then()
                     .statusCode(400);
         }
-
 
     }
 
