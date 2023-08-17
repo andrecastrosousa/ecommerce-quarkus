@@ -6,11 +6,13 @@ import jakarta.ws.rs.WebApplicationException;
 import mindswap.academy.item.converter.ItemConverter;
 import mindswap.academy.item.dto.ItemCreateDto;
 import mindswap.academy.item.dto.ItemDto;
+import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.model.ItemCategory;
 import mindswap.academy.item.repository.ItemCategoryRepository;
 import mindswap.academy.item.repository.ItemRepository;
 
+import java.util.Calendar;
 import java.util.List;
 @ApplicationScoped
 public class ItemServiceImpl implements ItemService{
@@ -47,6 +49,19 @@ public class ItemServiceImpl implements ItemService{
             throw new WebApplicationException("Item name already exists",400);
         }
         Item item = itemConverter.toEntityFromCreateDto(itemCreateDto);
+        //check if the category exits. If doesn't exist, persist.
+        for(ItemCategory itemCategory:item.getCategories()){
+            ItemCategory cat = itemCategoryRepository.find("name",itemCategory.getName())
+                    .firstResultOptional()
+                    .orElse(null);
+            if(cat==null){
+                itemCategoryRepository.persistAndFlush(itemCategory);
+            }
+            else{
+                itemCategoryRepository.persistAndFlush(cat);
+            }
+
+        }
         itemRepository.persist(item);
         return itemConverter.toDto(item);
     }
@@ -57,13 +72,16 @@ public class ItemServiceImpl implements ItemService{
     }
 
     @Override
-    public Item updateById(Long id, Item item) {
+    public ItemDto updateById(Long id, ItemUpdateDto itemUpdateDto) {
         Item existingItem = getById(id);
-        existingItem.setName(item.getName());
-        existingItem.setPrice(item.getPrice());
-        existingItem.setDescription(item.getDescription());
+        if(existingItem == null || !existingItem.getId().equals(itemUpdateDto.getId())){
+            throw new WebApplicationException("Item name already exists",400);
+        }
+        existingItem.setName(itemUpdateDto.getName());
+        existingItem.setPrice(itemUpdateDto.getPrice());
+        existingItem.setDescription(itemUpdateDto.getDescription());
         itemRepository.persist(existingItem);
-        return existingItem;
+        return itemConverter.toDto(existingItem);
     }
 
     @Override
@@ -71,19 +89,5 @@ public class ItemServiceImpl implements ItemService{
         Item item = getById(id);
         itemRepository.delete(item);
     }
-    @Override
-    public ItemCategory createItemCategory(String name){
-        ItemCategory itemCategory = new ItemCategory(name);
-        itemCategoryRepository.persist(itemCategory);
-        return itemCategory;
-    }
 
-    @Override
-    public void deleteCategory(String name) {
-        ItemCategory existingItemCategory = itemCategoryRepository
-                .find("name", name)
-                .firstResultOptional()
-                .orElseThrow(()->new WebApplicationException("Item category doesn't exist",400));
-        itemCategoryRepository.delete(existingItemCategory);
-    }
 }

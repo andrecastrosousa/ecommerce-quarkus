@@ -2,6 +2,7 @@ package mindswap.academy.item.service;
 
 import mindswap.academy.item.dto.ItemCreateDto;
 import mindswap.academy.item.dto.ItemDto;
+import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.model.ItemCategory;
 
@@ -13,9 +14,7 @@ public interface ItemService {
     Item getById(Long id);
     ItemDto create(ItemCreateDto itemCreateDto);
     List<ItemDto> createBulk(List<ItemCreateDto> items);
-    Item updateById(Long id, Item item);
+    ItemDto updateById(Long id, ItemUpdateDto itemUpdateDto);
     void deleteById(Long id);
-    ItemCategory createItemCategory(String name);
-    void deleteCategory(String name);
 
 }

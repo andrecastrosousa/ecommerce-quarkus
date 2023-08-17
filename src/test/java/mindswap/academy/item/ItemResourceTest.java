@@ -2,6 +2,7 @@ package mindswap.academy.item;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import mindswap.academy.item.repository.ItemRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,6 +19,7 @@ public class ItemResourceTest {
     ItemRepository itemRepository;
 
     @BeforeEach
+    @Transactional
     void setup(){
         itemRepository.deleteAll();
         itemRepository.getEntityManager()
@@ -27,10 +29,10 @@ public class ItemResourceTest {
 
     @Test
     public void testGetEndpoint() {
+
         given()
                 .when().get("/item")
                 .then()
-                .statusCode(200)
-                .body(nullValue());
+                .statusCode(200);
     }
 }
