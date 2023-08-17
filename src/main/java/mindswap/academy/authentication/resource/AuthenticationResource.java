@@ -29,7 +29,7 @@ public class AuthenticationResource {
     @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public AuthDto register(AuthRegisterDto authRegisterDto) {
-        return authenticationService.register(authRegisterDto);
+    public void register(AuthRegisterDto authRegisterDto) {
+        authenticationService.register(authRegisterDto);
     }
 }

@@ -5,6 +5,7 @@ import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
+import mindswap.academy.authentication.model.Auth;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
@@ -31,15 +32,19 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @ConfigProperty(name = "keycloak.password")
     private String password;
 
+    @ConfigProperty(name = "keycloak.secret")
+    private String secret;
+
     @Inject
     private Keycloak keycloak;
 
     @PostConstruct
     public void initKeycloak() {
         keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:61227/")
-                .realm(realm)
+                .serverUrl("http://localhost:53886/")
+                .realm("master")
                 .clientId(clientId)
+                .clientSecret(secret)
                 .grantType(grantType)
                 .username(username)
                 .password(password)
@@ -53,9 +58,9 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
 
     @Override
     public String createAuthentication(UserRepresentation userRepresentation, String password) {
-        // keycloak.tokenManager().grantToken().getToken();
         UsersResource usersResource = keycloak.realm(realm).users();
-        var alo2 = keycloak.tokenManager().getAccessToken();
+
+        userRepresentation.setEnabled(true);
 
         Response response = usersResource.create(userRepresentation);
         String userId = CreatedResponseUtil.getCreatedId(response);
@@ -70,5 +75,21 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
         userResource.resetPassword(passwordCred);
 
         return userId;
+    }
+
+    @Override
+    public Auth login(Auth auth) {
+        Keycloak keycloak1 = KeycloakBuilder.builder()
+                .serverUrl("http://localhost:53886/")
+                .realm("quarkus")
+                .clientId(clientId)
+                .grantType(grantType)
+                .username(auth.getEmail())
+                .password(auth.getPassword())
+                .build();
+
+        auth.setPassword(keycloak1.tokenManager().getAccessToken().getToken());
+
+        return auth;
     }
 }
