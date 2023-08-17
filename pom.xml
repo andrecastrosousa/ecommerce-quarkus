@@ -75,6 +75,10 @@
       <artifactId>quarkus-keycloak-admin-client-reactive</artifactId>
     </dependency>
     <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-keycloak-authorization</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.quarkiverse.config</groupId>
       <artifactId>quarkus-config-consul</artifactId>
       <scope>runtime</scope>

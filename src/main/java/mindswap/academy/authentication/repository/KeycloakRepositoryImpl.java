@@ -3,6 +3,7 @@ package mindswap.academy.authentication.repository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.keycloak.admin.client.CreatedResponseUtil;
@@ -30,17 +31,19 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @ConfigProperty(name = "keycloak.password")
     private String password;
 
+    @Inject
     private Keycloak keycloak;
 
     @PostConstruct
     public void initKeycloak() {
         keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:8081")
+                .serverUrl("http://localhost:8080/realms/quarkus")
                 .realm(realm)
                 .clientId(clientId)
                 .grantType(grantType)
                 .username(username)
                 .password(password)
+                .clientSecret("secret")
                 .build();
     }
 
@@ -51,7 +54,9 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
 
     @Override
     public String createAuthentication(UserRepresentation userRepresentation, String password) {
+        // keycloak.tokenManager().grantToken().getToken();
         UsersResource usersResource = keycloak.realm(realm).users();
+        var alo2 = keycloak.tokenManager().getAccessToken();
 
         Response response = usersResource.create(userRepresentation);
         String userId = CreatedResponseUtil.getCreatedId(response);
@@ -61,7 +66,7 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
         passwordCred.setType(CredentialRepresentation.PASSWORD);
         passwordCred.setValue(password);
 
-        UserResource userResource = usersResource.get(userId);
+        UserResource userResource = keycloak.realm(realm).users().get(userId);
 
         userResource.resetPassword(passwordCred);
 
