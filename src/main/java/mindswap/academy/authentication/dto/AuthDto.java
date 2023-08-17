@@ -1,13 +1,13 @@
 package mindswap.academy.authentication.dto;
 
 public class AuthDto {
-    private String userId;
+    private String token;
 
-    public String getUserId() {
-        return userId;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setToken(String token) {
+        this.token = token;
     }
 }

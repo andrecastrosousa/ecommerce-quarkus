@@ -7,6 +7,7 @@ import mindswap.academy.authentication.dto.AuthDto;
 import mindswap.academy.authentication.dto.AuthForgotPasswordDto;
 import mindswap.academy.authentication.dto.AuthLoginDto;
 import mindswap.academy.authentication.dto.AuthRegisterDto;
+import mindswap.academy.authentication.model.Auth;
 import mindswap.academy.authentication.repository.KeycloakRepository;
 import mindswap.academy.user.repository.UserRepository;
 
@@ -27,20 +28,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public AuthDto login(AuthLoginDto authLoginDto) {
-
-        return null;
+        Auth auth = keycloakRepository.login(authConverter.toEntityFromLoginDto(authLoginDto));
+        return authConverter.toDto(auth);
     }
 
     @Override
-    public AuthDto register(AuthRegisterDto authRegisterDto) {
+    public void register(AuthRegisterDto authRegisterDto) {
         List<String> roles = new ArrayList<>(List.of("user"));
         String userId = keycloakRepository.createAuthentication(
                 authConverter.toUserRepresentationFromRegisterDto(authRegisterDto, roles),
                 authRegisterDto.getPassword()
         );
-        AuthDto authDto = new AuthDto();
+        /*AuthDto authDto = new AuthDto();
         authDto.setUserId(userId);
-        return authDto;
+        return authDto;*/
     }
 
     @Override
