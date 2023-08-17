@@ -37,13 +37,12 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @PostConstruct
     public void initKeycloak() {
         keycloak = KeycloakBuilder.builder()
-                .serverUrl("http://localhost:8080/realms/quarkus")
+                .serverUrl("http://localhost:61227/")
                 .realm(realm)
                 .clientId(clientId)
                 .grantType(grantType)
                 .username(username)
                 .password(password)
-                .clientSecret("secret")
                 .build();
     }
 

@@ -12,8 +12,8 @@ docker run --name consul -p 8500:8500 -p 8501:8501 consul:1.7 agent -dev -ui -cl
 
 after that go to `localhost:8500/ui/dc1/kv` and create a `key/value` with `config/keycloak-access` and on value and this 
 ```
-keycloak.realm=quarkus
-keycloak.clientId=backend-service
+keycloak.realm=master
+keycloak.clientId=admin-cli
 keycloak.grantType=password
 keycloak.username=admin
 keycloak.password=admin
