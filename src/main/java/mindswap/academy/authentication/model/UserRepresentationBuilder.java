@@ -2,8 +2,6 @@ package mindswap.academy.authentication.model;
 
 import org.keycloak.representations.idm.UserRepresentation;
 
-import java.util.List;
-
 public class UserRepresentationBuilder {
     private final UserRepresentation userRepresentation;
 
@@ -26,17 +24,13 @@ public class UserRepresentationBuilder {
         return this;
     }
 
-    public UserRepresentationBuilder withRoles(List<String> roles) {
-        userRepresentation.setRealmRoles(roles);
-        return this;
-    }
-
     public UserRepresentationBuilder withEmail(String email) {
         userRepresentation.setEmail(email);
         return this;
     }
 
     public UserRepresentation build() {
+        userRepresentation.setEnabled(true);
         return userRepresentation;
     }
 

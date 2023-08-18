@@ -8,6 +8,7 @@ import mindswap.academy.authentication.dto.AuthLoginDto;
 import mindswap.academy.authentication.dto.AuthRegisterDto;
 import mindswap.academy.authentication.model.Auth;
 import mindswap.academy.authentication.model.UserRepresentationBuilder;
+import mindswap.academy.user.model.User;
 import org.keycloak.representations.idm.UserRepresentation;
 
 import java.util.List;
@@ -24,7 +25,6 @@ public class AuthConverter {
                 .withEmail(authRegisterDto.getEmail())
                 .withFirstName(authRegisterDto.getFirstName())
                 .withLastName(authRegisterDto.getLastName())
-                .withRoles(roles)
                 .build();
     }
 
@@ -34,5 +34,14 @@ public class AuthConverter {
 
     public Auth toEntityFromLoginDto(AuthLoginDto authLoginDto) {
         return objectMapper.convertValue(authLoginDto, Auth.class);
+    }
+
+    public User toUserFromRegisterDto(AuthRegisterDto authRegisterDto) {
+        return User.builder()
+                .withPhoneNumber(authRegisterDto.getPhoneNumber())
+                .withAddress(authRegisterDto.getAddresses())
+                .withCitizenCard(authRegisterDto.getCitizenCard())
+                .withNif(authRegisterDto.getNif())
+                .build();
     }
 }

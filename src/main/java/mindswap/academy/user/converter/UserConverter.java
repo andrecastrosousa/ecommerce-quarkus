@@ -3,6 +3,7 @@ package mindswap.academy.user.converter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import mindswap.academy.authentication.dto.AuthRegisterDto;
 import mindswap.academy.user.dto.UserCreateDto;
 import mindswap.academy.user.dto.UserDto;
 import mindswap.academy.user.dto.UserUpdateDto;
@@ -20,7 +21,6 @@ public class UserConverter {
     public User toEntityFromCreateDto(UserCreateDto userCreateDto){
         return User.builder()
                 .withPhoneNumber(userCreateDto.getPhoneNumber())
-                .withEmail(userCreateDto.getEmail())
                 .withNif(userCreateDto.getNif())
                 .withCitizenCard(userCreateDto.getCitizenCard())
                 .withAddress(userCreateDto.getAddresses())
