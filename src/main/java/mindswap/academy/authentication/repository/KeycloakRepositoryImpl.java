@@ -85,10 +85,6 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     public String createAuthentication(UserRepresentation userRepresentation, String password) {
         UsersResource usersResource = keycloak.realm(innerRealm).users();
 
-        RealmResource realmResource = keycloak.realm(innerRealm);
-
-        userRepresentation.setEnabled(true);
-
         Response response = usersResource.create(userRepresentation);
         String userId = CreatedResponseUtil.getCreatedId(response);
 
@@ -101,11 +97,7 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
 
         userResource.resetPassword(passwordCred);
 
-        RoleRepresentation testerRealmRole = realmResource.roles()
-                .get("user").toRepresentation();
-
-        userResource.roles().realmLevel()
-                .add(Collections.singletonList(testerRealmRole));
+        setupRoleToUser(userResource);
 
         return userId;
     }
@@ -121,5 +113,15 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
         } catch (Exception e) {
             throw new IllegalArgumentException("Token can't be obtained", e);
         }
+    }
+
+    private void setupRoleToUser(UserResource userResource) {
+        RealmResource realmResource = keycloak.realm(innerRealm);
+
+        RoleRepresentation testerRealmRole = realmResource.roles()
+                .get("user").toRepresentation();
+
+        userResource.roles().realmLevel()
+                .add(Collections.singletonList(testerRealmRole));
     }
 }

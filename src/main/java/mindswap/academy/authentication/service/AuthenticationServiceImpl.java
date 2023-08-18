@@ -2,6 +2,7 @@ package mindswap.academy.authentication.service;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import mindswap.academy.authentication.converter.AuthConverter;
 import mindswap.academy.authentication.dto.AuthDto;
 import mindswap.academy.authentication.dto.AuthForgotPasswordDto;
@@ -9,6 +10,7 @@ import mindswap.academy.authentication.dto.AuthLoginDto;
 import mindswap.academy.authentication.dto.AuthRegisterDto;
 import mindswap.academy.authentication.model.Auth;
 import mindswap.academy.authentication.repository.KeycloakRepository;
+import mindswap.academy.user.model.User;
 import mindswap.academy.user.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -33,15 +35,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
+    @Transactional
     public void register(AuthRegisterDto authRegisterDto) {
         List<String> roles = new ArrayList<>(List.of("user"));
-        String userId = keycloakRepository.createAuthentication(
+        String authId = keycloakRepository.createAuthentication(
                 authConverter.toUserRepresentationFromRegisterDto(authRegisterDto, roles),
                 authRegisterDto.getPassword()
         );
-        /*AuthDto authDto = new AuthDto();
-        authDto.setUserId(userId);
-        return authDto;*/
+
+        User user = authConverter.toUserFromRegisterDto(authRegisterDto);
+        user.setAuthId(authId);
+        userRepository.persist(user);
     }
 
     @Override
