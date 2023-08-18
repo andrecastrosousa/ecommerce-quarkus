@@ -52,4 +52,36 @@ public class OrderItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public static OrderItemBuilder builder(){
+        return new OrderItemBuilder();
+    }
+
+    public static class OrderItemBuilder{
+
+        private OrderItem orderItem;
+
+        public OrderItemBuilder() {
+            orderItem = new OrderItem();
+        }
+
+        public OrderItemBuilder withOrder(Order order){
+            orderItem.setOrder(order);
+            return this;
+        }
+
+        public OrderItemBuilder withItem(Item item){
+            orderItem.setItem(item);
+            return this;
+        }
+
+        public OrderItemBuilder withQuantity(int quantity){
+            orderItem.setQuantity(quantity);
+            return this;
+        }
+
+        public OrderItem build(){
+            return orderItem;
+        }
+    }
 }

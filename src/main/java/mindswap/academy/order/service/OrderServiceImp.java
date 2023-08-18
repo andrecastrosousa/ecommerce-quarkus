@@ -7,7 +7,7 @@ import jakarta.ws.rs.WebApplicationException;
 import mindswap.academy.order.converter.OrderConverter;
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderDto;
-import mindswap.academy.order.dto.OrderUpdatedDto;
+import mindswap.academy.order.dto.OrderUpdateDto;
 import mindswap.academy.order.model.Order;
 import mindswap.academy.order.repository.OrderRepository;
 
@@ -54,13 +54,13 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public OrderDto update(Long orderId, OrderUpdatedDto orderUpdatedDto) {
+    public OrderDto update(Long orderId, OrderUpdateDto orderUpdateDto) {
         Order existingOrder = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not found", 404));
-        if(!orderUpdatedDto.getId().equals(existingOrder.getId())){
+        if(!orderUpdateDto.getId().equals(existingOrder.getId())){
             throw new WebApplicationException("Id can not be changed", 400);
         }
-        existingOrder.setOrderDatetime(orderUpdatedDto.getOrderDatetime());
+        existingOrder.setOrderDatetime(orderUpdateDto.getOrderDatetime());
         orderRepository.persist(existingOrder);
         return orderConverter.toDto(existingOrder);
     }

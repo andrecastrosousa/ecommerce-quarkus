@@ -1,11 +1,10 @@
 package mindswap.academy.resource;
 
-import com.thoughtworks.xstream.core.util.OrderRetainingMap;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import mindswap.academy.order.dto.OrderCreateDto;
-import mindswap.academy.order.dto.OrderUpdatedDto;
+import mindswap.academy.order.dto.OrderUpdateDto;
 import mindswap.academy.order.repository.OrderRepository;
 import org.junit.jupiter.api.*;
 
@@ -14,7 +13,6 @@ import java.time.LocalDateTime;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.*;
 
 
 @QuarkusTest
@@ -40,7 +38,6 @@ class OrderResourceTest {
     @Tag("crud")
     @DisplayName("Order CRUD tests")
     public class OrderCrudTest {
-
 
         @Test
         @DisplayName("Create an order with valid fields and return 200")
@@ -115,17 +112,17 @@ class OrderResourceTest {
                     .statusCode(200)
                     .body("id", is(1));
 
-            OrderUpdatedDto orderUpdatedDto = new OrderUpdatedDto();
+            OrderUpdateDto orderUpdateDto = new OrderUpdateDto();
 
             // Esta a dar error por causa do orderUpdate nao ter id, e se meter tem de ser long
             LocalDate date = LocalDate.parse("2023-03-10");
             LocalDateTime dateTime = date.atStartOfDay();
-            orderUpdatedDto.setOrderDatetime(dateTime);
-            orderUpdatedDto.setId(1L);
+            orderUpdateDto.setOrderDatetime(dateTime);
+            orderUpdateDto.setId(1L);
 
             given()
                     .header("Content-Type", "application/json")
-                    .body(orderUpdatedDto)
+                    .body(orderUpdateDto)
                     .when().put("/orders/1")
                     .then()
                     .statusCode(200);
@@ -142,13 +139,13 @@ class OrderResourceTest {
                     .statusCode(200)
                     .body("id", is(1));
 
-            OrderUpdatedDto orderUpdatedDto = new OrderUpdatedDto();
+            OrderUpdateDto orderUpdateDto = new OrderUpdateDto();
 
-            orderUpdatedDto.setId(2L);
+            orderUpdateDto.setId(2L);
 
             given()
                     .header("Content-Type", "application/json")
-                    .body(orderUpdatedDto)
+                    .body(orderUpdateDto)
                     .when().put("/orders/1")
                     .then()
                     .statusCode(400);
