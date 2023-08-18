@@ -2,7 +2,7 @@ package mindswap.academy.order.service;
 
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderDto;
-import mindswap.academy.order.dto.OrderUpdatedDto;
+import mindswap.academy.order.dto.OrderUpdateDto;
 
 import java.util.List;
 
@@ -15,5 +15,5 @@ public interface OrderService {
 
     void delete(Long orderId);
 
-    OrderDto update(Long orderId, OrderUpdatedDto orderUpdatedDto);
+    OrderDto update(Long orderId, OrderUpdateDto orderUpdateDto);
 }
