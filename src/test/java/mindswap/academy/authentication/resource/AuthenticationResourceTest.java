@@ -30,10 +30,10 @@ public class AuthenticationResourceTest {
     public void testLogin() {
         given()
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(authRegisterDto)
+                .body(authLoginDto)
                 .when()
                 .post("/login")
                 .then()
-                .statusCode(204);
+                .statusCode(200);
     }
 }

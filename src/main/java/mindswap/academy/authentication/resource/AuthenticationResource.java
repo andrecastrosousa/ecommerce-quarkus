@@ -26,20 +26,8 @@ public class AuthenticationResource {
     @Path("/login")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String login(AuthLoginDto authLoginDto) {
-        final Configuration configuration = new Configuration("http://localhost:8081",
-                "quarkus", // keycloak realm
-                "backend-service", // keycloak client
-                Collections.singletonMap("secret", "secret"),
-                HttpClients.createDefault());
-
-        try {
-
-            return AuthzClient.create(configuration).obtainAccessToken(authLoginDto.getEmail(), authLoginDto.getPassword()).getToken(); // keycloak user and password
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Token can't be obtained", e);
-        }
-        //return authenticationService.login(authLoginDto);
+    public AuthDto login(AuthLoginDto authLoginDto) {
+        return authenticationService.login(authLoginDto);
     }
 
     @POST

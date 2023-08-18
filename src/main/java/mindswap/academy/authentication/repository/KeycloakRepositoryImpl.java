@@ -11,14 +11,14 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.authorization.client.AuthzClient;
 import org.keycloak.authorization.client.Configuration;
-import org.keycloak.representations.idm.CredentialRepresentation;
-import org.keycloak.representations.idm.RealmRepresentation;
-import org.keycloak.representations.idm.UserRepresentation;
+import org.keycloak.representations.idm.*;
 
+import java.util.Arrays;
 import java.util.Collections;
 
 @ApplicationScoped
@@ -85,6 +85,8 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     public String createAuthentication(UserRepresentation userRepresentation, String password) {
         UsersResource usersResource = keycloak.realm(innerRealm).users();
 
+        RealmResource realmResource = keycloak.realm(innerRealm);
+
         userRepresentation.setEnabled(true);
 
         Response response = usersResource.create(userRepresentation);
@@ -98,6 +100,12 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
         UserResource userResource = keycloak.realm(innerRealm).users().get(userId);
 
         userResource.resetPassword(passwordCred);
+
+        RoleRepresentation testerRealmRole = realmResource.roles()
+                .get("user").toRepresentation();
+
+        userResource.roles().realmLevel()
+                .add(Collections.singletonList(testerRealmRole));
 
         return userId;
     }
