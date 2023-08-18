@@ -6,15 +6,20 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.core.Response;
 import mindswap.academy.authentication.model.Auth;
+import org.apache.http.impl.client.HttpClients;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.keycloak.admin.client.CreatedResponseUtil;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.authorization.client.AuthzClient;
+import org.keycloak.authorization.client.Configuration;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.RealmRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
+
+import java.util.Collections;
 
 @ApplicationScoped
 public class KeycloakRepositoryImpl implements KeycloakRepository {
@@ -39,8 +44,15 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
     @ConfigProperty(name = "keycloak.innerRealm")
     private String innerRealm;
 
-    @Inject
+    @ConfigProperty(name = "authz-client.client-id")
+    private String authzClientId;
+
+    @ConfigProperty(name = "authz-client.secret")
+    private String authzSecret;
+
     private Keycloak keycloak;
+
+    private AuthzClient authzClient;
 
     @PostConstruct
     public void initKeycloak() {
@@ -52,6 +64,16 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
                 .username(username)
                 .password(password)
                 .build();
+
+        authzClient = AuthzClient.create(
+                new Configuration(
+                        serverUrl,
+                        innerRealm,
+                        authzClientId,
+                        Collections.singletonMap("secret", authzSecret),
+                        HttpClients.createDefault()
+                )
+        );
     }
 
     @PreDestroy
@@ -82,17 +104,14 @@ public class KeycloakRepositoryImpl implements KeycloakRepository {
 
     @Override
     public Auth login(Auth auth) {
-        Keycloak keycloak1 = KeycloakBuilder.builder()
-                .serverUrl(serverUrl)
-                .realm(baseRealm)
-                .clientId(clientId)
-                .grantType(grantType)
-                .username(auth.getEmail())
-                .password(auth.getPassword())
-                .build();
-
-        auth.setToken(keycloak1.tokenManager().getAccessToken().getToken());
-
-        return auth;
+        try {
+            String token = authzClient
+                    .obtainAccessToken(auth.getEmail(), auth.getPassword())
+                    .getToken();
+            auth.setToken(token);
+            return auth;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Token can't be obtained", e);
+        }
     }
 }
