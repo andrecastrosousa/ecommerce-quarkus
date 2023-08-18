@@ -12,6 +12,7 @@ import mindswap.academy.item.model.ItemCategory;
 import mindswap.academy.item.repository.ItemCategoryRepository;
 import mindswap.academy.item.repository.ItemRepository;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 @ApplicationScoped
@@ -48,20 +49,18 @@ public class ItemServiceImpl implements ItemService{
         if(itemRepository.find("name", itemCreateDto.getName()).firstResultOptional().isPresent()){
             throw new WebApplicationException("Item name already exists",400);
         }
-        Item item = itemConverter.toEntityFromCreateDto(itemCreateDto);
         //check if the category exits. If doesn't exist, persist.
-        for(ItemCategory itemCategory:item.getCategories()){
+        for(ItemCategory itemCategory:itemCreateDto.getCategories()){
             ItemCategory cat = itemCategoryRepository.find("name",itemCategory.getName())
                     .firstResultOptional()
                     .orElse(null);
             if(cat==null){
-                itemCategoryRepository.persistAndFlush(itemCategory);
-            }
-            else{
-                itemCategoryRepository.persistAndFlush(cat);
+                //itemCategory.getItens().add(itemConverter.toEntityFromCreateDto(itemCreateDto));
+                itemCategoryRepository.persist(itemCategory);
             }
 
         }
+        Item item = itemConverter.toEntityFromCreateDto(itemCreateDto);
         itemRepository.persist(item);
         return itemConverter.toDto(item);
     }

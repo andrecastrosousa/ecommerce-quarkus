@@ -9,6 +9,7 @@ import java.util.List;
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
     private String name;
 
@@ -16,7 +17,8 @@ public class Item {
 
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @JoinColumn(name = "ItemCategory_id")
     private List<ItemCategory> categories;
 
     @OneToMany
