@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import mindswap.academy.supplier.model.Supplier;
 import mindswap.academy.user.model.User;
 
-@Entity
+@Entity (name = "Address")
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
