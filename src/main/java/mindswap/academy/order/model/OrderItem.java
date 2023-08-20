@@ -6,7 +6,7 @@ import mindswap.academy.item.model.Item;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Entity
+@Entity (name ="OrderItem")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = IDENTITY)

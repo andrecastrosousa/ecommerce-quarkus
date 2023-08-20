@@ -9,6 +9,13 @@ public class OrderItemUpdatedDto {
     private Item item;
     private int quantity;
 
+    public OrderItemUpdatedDto(Long id, Order order, Item item, int quantity) {
+        this.id = id;
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+    }
+
     public Long getId() {
         return id;
     }
