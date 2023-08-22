@@ -7,6 +7,14 @@ public class OrderItemUpdateDto {
     private Item item;
     private int quantity;
 
+    public OrderItemUpdateDto() {
+    }
+
+    public OrderItemUpdateDto(Item item, int quantity) {
+        this.item = item;
+        this.quantity = quantity;
+    }
+
     public Item getItem() {
         return item;
     }
