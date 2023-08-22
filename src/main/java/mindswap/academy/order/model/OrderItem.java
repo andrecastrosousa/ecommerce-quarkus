@@ -15,11 +15,19 @@ public class OrderItem {
     @ManyToOne
     @JsonIgnore
     private Order order;
-
     @ManyToOne
     private Item item;
-
     private int quantity;
+
+    public OrderItem() {
+
+    }
+
+    public OrderItem(Order order, Item item, int quantity) {
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;

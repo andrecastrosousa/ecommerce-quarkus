@@ -6,7 +6,6 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
 import mindswap.academy.order.converter.OrderConverter;
 import mindswap.academy.order.dto.OrderCreateDto;
-import mindswap.academy.order.dto.OrderDto;
 import mindswap.academy.order.dto.OrderUpdateDto;
 import mindswap.academy.order.model.Order;
 import mindswap.academy.order.repository.OrderRepository;
@@ -23,24 +22,24 @@ public class OrderServiceImp implements OrderService {
     OrderConverter orderConverter;
 
     @Override
-    public List<OrderDto> getAll() {
+    public List<mindswap.academy.order.dto.OrderDto> getAll() {
        List<Order> orders = orderRepository.findAll().list();
-       List<OrderDto> orderDtos = new ArrayList<>();
+       List<mindswap.academy.order.dto.OrderDto> orderDtoDtos = new ArrayList<>();
        for(Order o : orders){
-           orderDtos.add(orderConverter.toDto(o));
+           orderDtoDtos.add(orderConverter.toDto(o));
        }
-       return orderDtos;
+       return orderDtoDtos;
     }
 
     @Override
-    public OrderDto getById(Long orderId) {
+    public mindswap.academy.order.dto.OrderDto getById(Long orderId) {
         Order order = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not Found", 404));
         return orderConverter.toDto(order);
     }
 
     @Override
-    public OrderDto create(OrderCreateDto orderCreateDto) {
+    public mindswap.academy.order.dto.OrderDto create(OrderCreateDto orderCreateDto) {
         Order order = orderConverter.fromOrderCreateDto(orderCreateDto);
         orderRepository.persist(order);
         return orderConverter.toDto(order);
@@ -54,7 +53,7 @@ public class OrderServiceImp implements OrderService {
     }
 
     @Override
-    public OrderDto update(Long orderId, OrderUpdateDto orderUpdateDto) {
+    public mindswap.academy.order.dto.OrderDto update(Long orderId, OrderUpdateDto orderUpdateDto) {
         Order existingOrder = orderRepository.findByIdOptional(orderId)
                 .orElseThrow(() -> new WebApplicationException("Order not found", 404));
         if(!orderUpdateDto.getId().equals(existingOrder.getId())){

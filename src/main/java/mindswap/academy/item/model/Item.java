@@ -1,7 +1,6 @@
 package mindswap.academy.item.model;
 
 import jakarta.persistence.*;
-import mindswap.academy.item.dto.ItemCreateDto;
 
 import java.util.List;
 
@@ -16,7 +15,7 @@ public class Item {
 
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<ItemCategory> categories;
 
     @OneToMany
