@@ -6,7 +6,7 @@ import mindswap.academy.order.model.Order;
 
 import java.util.List;
 
-@Entity
+@Entity(name = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
