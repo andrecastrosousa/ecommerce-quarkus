@@ -7,6 +7,14 @@ public class OrderAddItemDto {
     private Item item;
     private int quantity;
 
+    public OrderAddItemDto() {
+    }
+
+    public OrderAddItemDto(Item item, int quantity) {
+        this.item = item;
+        this.quantity = quantity;
+    }
+
     public Item getItem() {
         return item;
     }
