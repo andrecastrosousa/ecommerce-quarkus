@@ -5,7 +5,6 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import mindswap.academy.item.dto.ItemCreateDto;
-import mindswap.academy.item.dto.ItemDto;
 import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.service.ItemService;
@@ -28,7 +27,7 @@ public class ItemResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public ItemDto post(ItemCreateDto itemCreateDto){
+    public mindswap.academy.item.dto.ItemDto post(ItemCreateDto itemCreateDto){
         return itemService.create(itemCreateDto);
     }
 
@@ -37,7 +36,7 @@ public class ItemResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/item/{id}")
-    public ItemDto update(@PathParam("id") Long id, ItemUpdateDto itemUpdateDto){
+    public mindswap.academy.item.dto.ItemDto update(@PathParam("id") Long id, ItemUpdateDto itemUpdateDto){
         return itemService.updateById(id, itemUpdateDto);
     }
 
