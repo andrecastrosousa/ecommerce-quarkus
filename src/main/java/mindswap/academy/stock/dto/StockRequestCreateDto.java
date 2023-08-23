@@ -14,6 +14,14 @@ public class StockRequestCreateDto {
     private Supplier supplier;
     private Item item;
 
+    public StockRequestCreateDto(Supplier supplier, Item item) {
+        this.supplier = supplier;
+        this.item = item;
+    }
+
+    public StockRequestCreateDto() {
+    }
+
     public Long getId() {
         return id;
     }

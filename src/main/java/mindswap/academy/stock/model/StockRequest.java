@@ -5,7 +5,7 @@ import mindswap.academy.supplier.model.Supplier;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "StockRequest")
 public class StockRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

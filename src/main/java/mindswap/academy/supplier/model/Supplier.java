@@ -7,7 +7,7 @@ import mindswap.academy.stock.model.StockRequest;
 
 import java.util.List;
 
-@Entity
+@Entity (name = "Supplier" )
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
