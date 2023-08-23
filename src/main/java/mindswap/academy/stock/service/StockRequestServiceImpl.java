@@ -74,6 +74,10 @@ public class StockRequestServiceImpl implements StockRequestService{
 
     @Override
     public void delete(Long id) {
-
+    StockRequest stockRequest = stockRequestRepository.findById(id);
+    if(stockRequest == null){
+        throw new WebApplicationException("Stock Request not found", 404);
+    }
+    stockRequestRepository.delete(stockRequest);
     }
 }
