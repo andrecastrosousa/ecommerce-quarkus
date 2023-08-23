@@ -1,14 +1,25 @@
 package mindswap.academy.order.dto;
 
+import mindswap.academy.item.dto.ItemDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.order.model.Order;
 
 public class OrderItemDto {
 
     private Long id;
-    private Order order;
-    private Item item;
+
+    //Meter orderdto
+    private OrderDto orderDto;
+    //Meter itemdto
+    private ItemDto itemDto;
     private int quantity;
+
+    public OrderItemDto(Long id, OrderDto orderDto, ItemDto itemDto, int quantity) {
+        this.id = id;
+        this.orderDto = orderDto;
+        this.itemDto = itemDto;
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;
@@ -18,20 +29,20 @@ public class OrderItemDto {
         this.id = id;
     }
 
-    public Order getOrder() {
-        return order;
+    public OrderDto getOrderDto() {
+        return orderDto;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrderDto(OrderDto orderDto) {
+        this.orderDto = orderDto;
     }
 
-    public Item getItem() {
-        return item;
+    public ItemDto getItemDto() {
+        return itemDto;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setItemDto(ItemDto itemDto) {
+        this.itemDto = itemDto;
     }
 
     public int getQuantity() {
