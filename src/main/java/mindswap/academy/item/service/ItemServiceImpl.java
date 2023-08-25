@@ -46,7 +46,7 @@ public class ItemServiceImpl implements ItemService{
                 .findByIdOptional(id)
                 .orElseThrow(()->new WebApplicationException("Item not found",404));
     }
-
+//comentario teste
     @Override
     public ItemDto create(ItemCreateDto itemCreateDto) {
         if(itemRepository.find("name", itemCreateDto.getName()).firstResultOptional().isPresent()){
