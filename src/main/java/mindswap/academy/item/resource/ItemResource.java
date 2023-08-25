@@ -20,8 +20,15 @@ public class ItemResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Item> getAll(){
+    public List<ItemDto> getAll(){
         return itemService.getAll();
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{name}")
+    public Item getByName(@PathParam("name") String name){
+        return itemService.getByName(name);
     }
 
     @POST
@@ -36,7 +43,7 @@ public class ItemResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/item/{id}")
+    @Path("/{id}")
     public ItemDto update(@PathParam("id") Long id, ItemUpdateDto itemUpdateDto){
         return itemService.updateById(id, itemUpdateDto);
     }
@@ -44,7 +51,7 @@ public class ItemResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    @Path("/item/{id}")
+    @Path("/{id}")
     public void delete(@PathParam("id") Long id){
         itemService.deleteById(id);
     }

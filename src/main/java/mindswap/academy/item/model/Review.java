@@ -1,11 +1,8 @@
 package mindswap.academy.item.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
-@Entity
+@Entity(name = "review")
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +11,17 @@ public class Review {
     private double rating;
 
     private String commentary;
+    @ManyToOne
+    private Item item;
+
+    public Review() {
+    }
+
+    public Review(double rating, String commentary, Item item) {
+        this.rating = rating;
+        this.commentary = commentary;
+        this.item = item;
+    }
 
     public Long getId() {
         return id;
@@ -37,5 +45,13 @@ public class Review {
 
     public void setCommentary(String commentary) {
         this.commentary = commentary;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 }

@@ -5,11 +5,10 @@ import mindswap.academy.item.dto.ItemCreateDto;
 
 import java.util.List;
 
-@Entity(name = "Items")
+@Entity(name = "item")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     private String name;
 
@@ -17,11 +16,10 @@ public class Item {
 
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-    @JoinColumn(name = "ItemCategory_id")
-    private List<ItemCategory> categories;
+    @ManyToOne
+    private ItemCategory itemCategory;
 
-    @OneToMany
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
     private List<Review> reviews;
 
     public Long getId() {
@@ -56,12 +54,12 @@ public class Item {
         this.description = description;
     }
 
-    public List<ItemCategory> getCategories() {
-        return categories;
+    public ItemCategory  getItemCategory() {
+        return itemCategory;
     }
 
-    public void setCategories(List<ItemCategory> categories) {
-        this.categories = categories;
+    public void setItemCategory(ItemCategory itemCategory) {
+        this.itemCategory = itemCategory;
     }
 
     public List<Review> getReviews() {
@@ -95,8 +93,8 @@ public class Item {
             item.setDescription(description);
             return this;
         }
-        public ItemBuilder withCategory(List<ItemCategory> categories){
-            item.setCategories(categories);
+        public ItemBuilder withItemCategory(ItemCategory itemCategory){
+            item.setItemCategory(itemCategory);
             return this;
         }
         public Item build(){

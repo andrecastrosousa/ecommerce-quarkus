@@ -20,7 +20,7 @@ public class ItemCategoryResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<ItemCategory> getAll(){
+    public List<ItemCategoryDto> getAll(){
         return itemCategoryService.getAll();
     }
 

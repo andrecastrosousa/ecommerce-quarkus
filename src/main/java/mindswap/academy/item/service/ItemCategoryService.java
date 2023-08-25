@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ItemCategoryService {
 
-    List<ItemCategory> getAll();
+    List<ItemCategoryDto> getAll();
     ItemCategory getByName(String name);
     ItemCategory getById(Long id);
     ItemCategoryDto create(ItemCategoryCreateDto itemCategoryCreateDto);

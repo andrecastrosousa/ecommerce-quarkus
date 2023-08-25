@@ -9,7 +9,7 @@ import mindswap.academy.item.model.ItemCategory;
 import java.util.List;
 
 public interface ItemService {
-    List<Item> getAll();
+    List<ItemDto> getAll();
     Item getByName(String name);
     Item getById(Long id);
     ItemDto create(ItemCreateDto itemCreateDto);

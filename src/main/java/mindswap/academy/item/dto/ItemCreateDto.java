@@ -11,16 +11,16 @@ public class ItemCreateDto {
 
     private String description;
 
-    private List<ItemCategory> categories;
+    private Long itemCategoryId;
 
     public ItemCreateDto() {
     }
 
-    public ItemCreateDto(String name, Double price, String description, List<ItemCategory> categories) {
+    public ItemCreateDto(String name, Double price, String description, Long itemCategoryId) {
         this.name = name;
         this.price = price;
         this.description = description;
-        this.categories = categories;
+        this.itemCategoryId = itemCategoryId;
     }
 
     public String getName() {
@@ -47,12 +47,12 @@ public class ItemCreateDto {
         this.description = description;
     }
 
-    public List<ItemCategory> getCategories() {
-        return categories;
+    public Long getItemCategoryId() {
+        return itemCategoryId;
     }
 
-    public void setCategories(List<ItemCategory> categories) {
-        this.categories = categories;
+    public void setItemCategoryId(Long itemCategoryId) {
+        this.itemCategoryId = itemCategoryId;
     }
 
 
@@ -80,8 +80,8 @@ public class ItemCreateDto {
             itemCreateDto.setDescription(description);
             return this;
         }
-        public ItemCreateDtoBuilder withCategory(List<ItemCategory> categories){
-            itemCreateDto.setCategories(categories);
+        public ItemCreateDtoBuilder withCategory(Long itemCategoryId){
+            itemCreateDto.setItemCategoryId(itemCategoryId);
             return this;
         }
         public ItemCreateDto build(){

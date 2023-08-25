@@ -15,6 +15,8 @@ import mindswap.academy.item.repository.ItemRepository;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @ApplicationScoped
 public class ItemServiceImpl implements ItemService{
     @Inject
@@ -25,8 +27,8 @@ public class ItemServiceImpl implements ItemService{
     ItemCategoryRepository itemCategoryRepository;
 
     @Override
-    public List<Item> getAll() {
-        return itemRepository.findAll().list();
+    public List<ItemDto> getAll() {
+        return itemRepository.findAll().list().stream().map(i->itemConverter.toDto(i)).collect(Collectors.toList());
     }
 
     @Override
@@ -49,18 +51,15 @@ public class ItemServiceImpl implements ItemService{
         if(itemRepository.find("name", itemCreateDto.getName()).firstResultOptional().isPresent()){
             throw new WebApplicationException("Item name already exists",400);
         }
-        //check if the category exits. If doesn't exist, persist.
-        for(ItemCategory itemCategory:itemCreateDto.getCategories()){
-            ItemCategory cat = itemCategoryRepository.find("name",itemCategory.getName())
+            Long itemCatId =  itemCreateDto.getItemCategoryId();
+            ItemCategory cat = itemCategoryRepository.find("id",itemCatId)
                     .firstResultOptional()
                     .orElse(null);
             if(cat==null){
-                //itemCategory.getItens().add(itemConverter.toEntityFromCreateDto(itemCreateDto));
-                itemCategoryRepository.persist(itemCategory);
+                throw new WebApplicationException("Item Category doesn't exists",400);
             }
 
-        }
-        Item item = itemConverter.toEntityFromCreateDto(itemCreateDto);
+        Item item = itemConverter.toEntityFromCreateDto(itemCreateDto, cat);
         itemRepository.persist(item);
         return itemConverter.toDto(item);
     }

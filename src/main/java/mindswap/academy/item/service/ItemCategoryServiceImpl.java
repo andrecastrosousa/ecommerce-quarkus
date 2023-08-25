@@ -11,6 +11,8 @@ import mindswap.academy.item.model.ItemCategory;
 import mindswap.academy.item.repository.ItemCategoryRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 @ApplicationScoped
 public class ItemCategoryServiceImpl implements ItemCategoryService{
 
@@ -19,8 +21,12 @@ public class ItemCategoryServiceImpl implements ItemCategoryService{
     @Inject
     ItemCategoryConverter itemCategoryConverter;
     @Override
-    public List<ItemCategory> getAll() {
-        return itemCategoryRepository.findAll().list();
+    public List<ItemCategoryDto> getAll() {
+        return itemCategoryRepository.findAll()
+                .list()
+                .stream()
+                .map(ic->itemCategoryConverter.toDto(ic))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -43,9 +49,9 @@ public class ItemCategoryServiceImpl implements ItemCategoryService{
         if(itemCategoryRepository.find("name", itemCategoryCreateDto.getName()).firstResultOptional().isPresent()) {
             throw new WebApplicationException("Item Category name already exists", 400);
         }
-        ItemCategory item = itemCategoryConverter.toEntityFromCreateDto(itemCategoryCreateDto);
-        itemCategoryRepository.persist(item);
-        return itemCategoryConverter.toDto(item);
+        ItemCategory itemCategory = itemCategoryConverter.toEntityFromCreateDto(itemCategoryCreateDto);
+        itemCategoryRepository.persist(itemCategory);
+        return itemCategoryConverter.toDto(itemCategory);
     }
     //in progress
     @Override
