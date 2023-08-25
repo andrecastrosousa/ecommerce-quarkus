@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ItemDto {
     //adicionar o Id em todos os Dtos
+
     private String name;
 
     private Double price;
@@ -22,6 +23,7 @@ public class ItemDto {
         this.price = price;
         this.reviewsDto = reviewsDto;
         this.itemCategory = itemCategory;
+
     }
 
     public String getName() {
@@ -55,4 +57,5 @@ public class ItemDto {
     public void setItemCategory(String itemCategoryDto) {
         this.itemCategory = itemCategoryDto;
     }
+
 }

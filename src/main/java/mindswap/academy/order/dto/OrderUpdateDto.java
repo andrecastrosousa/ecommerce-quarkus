@@ -7,7 +7,7 @@ import mindswap.academy.shipping.model.Shipping;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class OrderUpdatedDto {
+public class OrderUpdateDto {
 
     private Long id;
     private double total;
@@ -17,10 +17,10 @@ public class OrderUpdatedDto {
     private PaymentMethod paymentMethod;
 
 
-    public OrderUpdatedDto() {
+    public OrderUpdateDto() {
     }
 
-    public OrderUpdatedDto(Long id, double total, LocalDateTime orderDatetime, List<OrderItem> orderItems, Shipping shipping, PaymentMethod paymentMethod) {
+    public OrderUpdateDto(Long id, double total, LocalDateTime orderDatetime, List<OrderItem> orderItems, Shipping shipping, PaymentMethod paymentMethod) {
         this.id = id;
         this.total = total;
         this.orderDatetime = orderDatetime;

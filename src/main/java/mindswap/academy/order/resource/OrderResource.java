@@ -9,7 +9,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import mindswap.academy.order.dto.OrderCreateDto;
 import mindswap.academy.order.dto.OrderDto;
-import mindswap.academy.order.dto.OrderUpdatedDto;
+import mindswap.academy.order.dto.OrderUpdateDto;
 import mindswap.academy.order.service.OrderServiceImp;
 
 import java.util.List;
@@ -53,7 +53,7 @@ public class OrderResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public OrderDto put(@PathParam("orderId") Long orderId, OrderUpdatedDto orderUpdatedDto) {
-        return orderServiceImp.update(orderId, orderUpdatedDto);
+    public OrderDto put(@PathParam("orderId") Long orderId, OrderUpdateDto orderUpdateDto) {
+        return orderServiceImp.update(orderId, orderUpdateDto);
     }
 }

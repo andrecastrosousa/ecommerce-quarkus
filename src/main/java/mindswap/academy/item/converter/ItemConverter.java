@@ -12,6 +12,7 @@ import mindswap.academy.item.model.Review;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @ApplicationScoped
 public class ItemConverter {
 
@@ -34,6 +35,7 @@ public class ItemConverter {
             return reviewsDto;
         }
         return null;
+
     }
 
 

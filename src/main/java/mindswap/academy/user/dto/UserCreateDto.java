@@ -6,7 +6,6 @@ import java.util.List;
 
 public class UserCreateDto {
     private String password;
-    private String email;
     private List<Address> addresses;
     private int phoneNumber;
     private String citizenCard;
@@ -18,14 +17,6 @@ public class UserCreateDto {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public List<Address> getAddresses() {

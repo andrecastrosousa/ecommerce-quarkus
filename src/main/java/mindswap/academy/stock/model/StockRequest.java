@@ -5,7 +5,7 @@ import mindswap.academy.supplier.model.Supplier;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "StockRequest")
 public class StockRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class StockRequest {
     @ManyToOne
     private Stock stock;
 
-    private long pricePerUnit;
+    private double pricePerUnit;
 
     private int quantity;
 
@@ -49,11 +49,11 @@ public class StockRequest {
         this.stock = stock;
     }
 
-    public long getPricePerUnit() {
+    public double getPricePerUnit() {
         return pricePerUnit;
     }
 
-    public void setPricePerUnit(long pricePerUnit) {
+    public void setPricePerUnit(double pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
     }
 
@@ -79,5 +79,53 @@ public class StockRequest {
 
     public void setReceivedDate(LocalDateTime receivedDate) {
         this.receivedDate = receivedDate;
+    }
+
+    public static StockRequestBuilder builder(){
+        return new StockRequestBuilder();
+    }
+    public static final class StockRequestBuilder{
+        private final StockRequest stockRequest;
+
+        StockRequestBuilder(){
+            stockRequest = new StockRequest();
+        }
+
+        public StockRequestBuilder withId(Long id){
+            stockRequest.setId(id);
+            return this;
+        }
+
+        public StockRequestBuilder withPricePerUnity(Double pricePerUnity){
+            stockRequest.setPricePerUnit(pricePerUnity);
+            return this;
+        }
+
+        public StockRequestBuilder withSupplier(Supplier supplier){
+            stockRequest.setSupplier(supplier);
+            return this;
+        }
+        public StockRequestBuilder withQuantity(int quantity){
+            stockRequest.setQuantity(quantity);
+            return this;
+        }
+
+        public StockRequestBuilder withReceivedDate(LocalDateTime receivedDate){
+            stockRequest.setReceivedDate(receivedDate);
+            return this;
+        }
+        public StockRequestBuilder withRequestDate(LocalDateTime requestDate){
+            stockRequest.setRequestDate(requestDate);
+            return this;
+        }
+
+        public StockRequestBuilder withStock(Stock stock) {
+            stockRequest.setStock(stock);
+            return this;
+        }
+
+        public StockRequest build(){
+            return stockRequest;
+        }
     }
 }

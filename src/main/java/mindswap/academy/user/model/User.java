@@ -6,14 +6,14 @@ import mindswap.academy.order.model.Order;
 
 import java.util.List;
 
-@Entity
+@Entity(name = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
-    private String email;
+    private String authId;
 
     private int phoneNumber;
 
@@ -33,14 +33,6 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public int getPhoneNumber() {
@@ -87,16 +79,19 @@ public class User {
         return new UserBuilder();
     }
 
+    public String getAuthId() {
+        return authId;
+    }
+
+    public void setAuthId(String authId) {
+        this.authId = authId;
+    }
+
     public static final class UserBuilder{
         private final User user;
 
         UserBuilder(){
             user = new User();
-        }
-
-        public UserBuilder withEmail(String email){
-            user.setEmail(email);
-            return this;
         }
 
         public UserBuilder withId(Long id){

@@ -6,6 +6,7 @@ import jakarta.ws.rs.WebApplicationException;
 import mindswap.academy.item.converter.ItemConverter;
 import mindswap.academy.item.dto.ItemCreateDto;
 import mindswap.academy.item.dto.ItemDto;
+
 import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.model.ItemCategory;
@@ -60,17 +61,20 @@ public class ItemServiceImpl implements ItemService{
             }
 
         Item item = itemConverter.toEntityFromCreateDto(itemCreateDto, cat);
+
         itemRepository.persist(item);
         return itemConverter.toDto(item);
     }
 
     @Override
     public List<ItemDto> createBulk(List<ItemCreateDto> items) {
+
         return items.stream().map(this::create).toList();
     }
 
     @Override
     public ItemDto updateById(Long id, ItemUpdateDto itemUpdateDto) {
+
         Item existingItem = getById(id);
         if(existingItem == null || !existingItem.getId().equals(itemUpdateDto.getId())){
             throw new WebApplicationException("Item name already exists",400);

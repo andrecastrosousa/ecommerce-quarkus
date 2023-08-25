@@ -13,6 +13,7 @@ public class ItemCreateDto {
 
     private Long itemCategoryId;
 
+
     public ItemCreateDto() {
     }
 
@@ -21,6 +22,7 @@ public class ItemCreateDto {
         this.price = price;
         this.description = description;
         this.itemCategoryId = itemCategoryId;
+
     }
 
     public String getName() {
@@ -53,6 +55,7 @@ public class ItemCreateDto {
 
     public void setItemCategoryId(Long itemCategoryId) {
         this.itemCategoryId = itemCategoryId;
+
     }
 
 
@@ -82,6 +85,7 @@ public class ItemCreateDto {
         }
         public ItemCreateDtoBuilder withCategory(Long itemCategoryId){
             itemCreateDto.setItemCategoryId(itemCategoryId);
+
             return this;
         }
         public ItemCreateDto build(){

@@ -4,6 +4,21 @@ This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
 
+## Setup Consul
+You can run this command in terminal 
+```shell script
+docker run --name consul -p 8500:8500 -p 8501:8501 consul:1.7 agent -dev -ui -client=0.0.0.0 -bind=0.0.0.0 --https-port=8501
+```
+
+after that go to `localhost:8500/ui/dc1/kv` and create a `key/value` with `config/keycloak-access` and on value and this 
+```
+keycloak.realm=master
+keycloak.clientId=admin-cli
+keycloak.grantType=password
+keycloak.username=admin
+keycloak.password=admin
+```
+
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:

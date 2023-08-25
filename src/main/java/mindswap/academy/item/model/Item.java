@@ -6,6 +6,7 @@ import mindswap.academy.item.dto.ItemCreateDto;
 import java.util.List;
 
 @Entity(name = "item")
+
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +96,7 @@ public class Item {
         }
         public ItemBuilder withItemCategory(ItemCategory itemCategory){
             item.setItemCategory(itemCategory);
+
             return this;
         }
         public Item build(){

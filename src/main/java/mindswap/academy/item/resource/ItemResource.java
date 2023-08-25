@@ -6,6 +6,7 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import mindswap.academy.item.dto.ItemCreateDto;
 import mindswap.academy.item.dto.ItemDto;
+
 import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.service.ItemService;
@@ -31,11 +32,13 @@ public class ItemResource {
         return itemService.getByName(name);
     }
 
+
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public ItemDto post(ItemCreateDto itemCreateDto){
+
         return itemService.create(itemCreateDto);
     }
 
@@ -45,6 +48,7 @@ public class ItemResource {
     @Transactional
     @Path("/{id}")
     public ItemDto update(@PathParam("id") Long id, ItemUpdateDto itemUpdateDto){
+
         return itemService.updateById(id, itemUpdateDto);
     }
 
@@ -52,6 +56,7 @@ public class ItemResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     @Path("/{id}")
+
     public void delete(@PathParam("id") Long id){
         itemService.deleteById(id);
     }

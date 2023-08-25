@@ -6,6 +6,7 @@ import mindswap.academy.item.dto.ItemUpdateDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.model.ItemCategory;
 
+
 import java.util.List;
 
 public interface ItemService {
@@ -15,6 +16,7 @@ public interface ItemService {
     ItemDto create(ItemCreateDto itemCreateDto);
     List<ItemDto> createBulk(List<ItemCreateDto> items);
     ItemDto updateById(Long id, ItemUpdateDto itemUpdateDto);
+
     void deleteById(Long id);
 
 }

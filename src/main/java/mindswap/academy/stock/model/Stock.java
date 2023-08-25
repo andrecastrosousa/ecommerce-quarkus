@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.supplier.model.Supplier;
 
-@Entity
+@Entity(name = "Stock")
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +19,15 @@ public class Stock {
     private Supplier supplier;
 
     private int quantity;
+
+    public Stock(Item item, Supplier supplier) {
+        this.item = item;
+        this.supplier = supplier;
+    }
+
+    public Stock() {
+
+    }
 
     public Long getId() {
         return id;

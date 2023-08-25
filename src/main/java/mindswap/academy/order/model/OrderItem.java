@@ -6,7 +6,7 @@ import mindswap.academy.item.model.Item;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@Entity
+@Entity (name ="OrderItem")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -15,11 +15,19 @@ public class OrderItem {
     @ManyToOne
     @JsonIgnore
     private Order order;
-
     @ManyToOne
     private Item item;
-
     private int quantity;
+
+    public OrderItem() {
+
+    }
+
+    public OrderItem(Order order, Item item, int quantity) {
+        this.order = order;
+        this.item = item;
+        this.quantity = quantity;
+    }
 
     public Long getId() {
         return id;
@@ -51,5 +59,37 @@ public class OrderItem {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public static OrderItemBuilder builder(){
+        return new OrderItemBuilder();
+    }
+
+    public static class OrderItemBuilder{
+
+        private OrderItem orderItem;
+
+        public OrderItemBuilder() {
+            orderItem = new OrderItem();
+        }
+
+        public OrderItemBuilder withOrder(Order order){
+            orderItem.setOrder(order);
+            return this;
+        }
+
+        public OrderItemBuilder withItem(Item item){
+            orderItem.setItem(item);
+            return this;
+        }
+
+        public OrderItemBuilder withQuantity(int quantity){
+            orderItem.setQuantity(quantity);
+            return this;
+        }
+
+        public OrderItem build(){
+            return orderItem;
+        }
     }
 }
