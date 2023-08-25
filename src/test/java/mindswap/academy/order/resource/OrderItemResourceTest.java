@@ -37,11 +37,10 @@ class OrderItemResourceTest {
    Item item = Item.builder()
            .withPrice(20.0).build();
 
+   Order order = Order.builder().build();
     OrderAddItemDto orderAddItemDto = new OrderAddItemDto(item, 10);
-    OrderCreateDto orderCreateDto = new OrderCreateDto(LocalDateTime.now());
     OrderItemUpdateDto orderItemUpdateDto = new OrderItemUpdateDto(item, 5);
 
-    OrderItem orderItem = new OrderItem(new Order(), item, 2);
 
     @BeforeEach
     @Transactional
@@ -59,6 +58,7 @@ class OrderItemResourceTest {
         orderRepository.getEntityManager()
                 .createNativeQuery("ALTER TABLE Orders AUTO_INCREMENT = 1")
                 .executeUpdate();
+        orderRepository.persist(order);
     }
 
     @Nested
@@ -69,14 +69,6 @@ class OrderItemResourceTest {
         @Test
         @DisplayName("Create an order item with valid fields and return 200")
         public void createOrderItemWithValidFields200(){
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(1));
-
             given()
                     .header("Content-Type", "application/json")
                     .body(orderAddItemDto)
@@ -94,27 +86,14 @@ class OrderItemResourceTest {
         @Test
         @DisplayName("Create an order item with invalid fields and return 400")
         public void createOrderItemWithInvalidFields400(){
-            // Needs to create a OrderItem and persist for get 400
-            /*
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(1));
-
-
 
             given()
                     .header("Content-Type", "application/json")
-                    .body(orderAddItemDto)
+                    .body(item == null)
                     .when().post("/orders/1/items")
                     .then()
                     .statusCode(400);
 
-
-             */
         }
 
         @Test
@@ -122,8 +101,8 @@ class OrderItemResourceTest {
         public void getAnOrderWithInvalidId404(){
             given()
                     .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
+                    .body(orderAddItemDto)
+                    .when().post("/orders/1/items")
                     .then()
                     .statusCode(200)
                     .body("id", is(1));
@@ -140,14 +119,6 @@ class OrderItemResourceTest {
         @Test
         @DisplayName("Delete an Order with valid fields return 200")
         public void deleteAnOrderWithValidFields200(){
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(1));
-
             given()
                     .header("Content-Type", "application/json")
                     .body(orderAddItemDto)
@@ -169,15 +140,7 @@ class OrderItemResourceTest {
 
         @Test
         @DisplayName("Update an order item with valid fields and return 200")
-
             public void updateAnOrderWithValidFields200(){
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(1));
 
             given()
                     .header("Content-Type", "application/json")
@@ -196,15 +159,8 @@ class OrderItemResourceTest {
         }
 
         @Test
-        @DisplayName("Update an order item with invalid fields and return 400")
+        @DisplayName("Update an order with item that not exist and return 404")
         public void updateAnOrderWithInvalidFields400(){
-            given()
-                    .header("Content-Type", "application/json")
-                    .body(orderCreateDto)
-                    .when().post("/orders")
-                    .then()
-                    .statusCode(200)
-                    .body("id", is(1));
 
             given()
                     .header("Content-Type", "application/json")
@@ -213,11 +169,9 @@ class OrderItemResourceTest {
                     .then()
                     .statusCode(200);
 
-            //needs to persist item for can have a 400 !
-/*
             Item item2 = Item.builder()
-                    .withPrice(40.0).build();
-            itemRepository.persist(item2);
+                    .withPrice(2.0).build();
+            item2.setId(2L);
 
             OrderItemUpdateDto orderItemUpdateDtoInvalid = new OrderItemUpdateDto(item2, 12);
             given()
@@ -225,9 +179,8 @@ class OrderItemResourceTest {
                     .body(orderItemUpdateDtoInvalid)
                     .when().put("/orders/1/items")
                     .then()
-                    .statusCode(400);
+                    .statusCode(404);
 
- */
         }
 
     }
