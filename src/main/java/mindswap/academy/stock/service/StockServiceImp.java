@@ -1,16 +1,24 @@
 package mindswap.academy.stock.service;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.WebApplicationException;
+import mindswap.academy.item.converter.ItemConverter;
+import mindswap.academy.item.dto.ItemDto;
 import mindswap.academy.item.model.Item;
 import mindswap.academy.item.repository.ItemRepository;
 import mindswap.academy.stock.converter.StockConverter;
 import mindswap.academy.stock.dto.StockDto;
+import mindswap.academy.stock.dto.StockItemDto;
+import mindswap.academy.stock.dto.StockSupplierDto;
 import mindswap.academy.stock.model.Stock;
 import mindswap.academy.stock.repository.StockRepository;
+import mindswap.academy.supplier.converter.SupplierConverter;
 import mindswap.academy.supplier.model.Supplier;
 import mindswap.academy.supplier.repository.SupplierRepository;
 
+
+@ApplicationScoped
 public class StockServiceImp implements StockService {
 
     @Inject
@@ -23,7 +31,7 @@ public class StockServiceImp implements StockService {
     StockConverter stockConverter;
 
     @Override
-    public StockDto getByItemId(Long itemId) {
+    public StockItemDto getByItemId(Long itemId) {
         Item existingItem = itemRepository.findByIdOptional(itemId)
                 .orElseThrow(() -> new WebApplicationException("Item not found", 404));
         Stock stock = stockRepository.find("itemId", existingItem.getId()).firstResultOptional()
@@ -31,11 +39,11 @@ public class StockServiceImp implements StockService {
         if(stock == null){
             throw new WebApplicationException("Item not found", 404);
         }
-        return stockConverter.fromStock(stock);
+        return stockConverter.fromStockToStockItemDto(stock);
     }
 
     @Override
-    public StockDto getBySupplierId(Long supplierId) {
+    public StockSupplierDto getBySupplierId(Long supplierId) {
         Supplier supplier = supplierRepository.findByIdOptional(supplierId)
                 .orElseThrow(() -> new WebApplicationException("Supplier not found", 404));
         Stock stock = stockRepository.find("supplierId", supplier.getId()).firstResultOptional()
@@ -43,7 +51,7 @@ public class StockServiceImp implements StockService {
         if(stock == null){
             throw new WebApplicationException("Supplier not found", 404);
         }
-        return stockConverter.fromStock(stock);
+        return stockConverter.fromStockToStockSupplierDto(stock);
     }
 
 
