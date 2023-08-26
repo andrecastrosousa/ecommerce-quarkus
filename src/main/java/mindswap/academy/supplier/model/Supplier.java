@@ -12,17 +12,15 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-
     private int nif;
-
     private int phoneNumber;
+
     @OneToMany(mappedBy = "supplier")
     private List<Address> addresses;
+
     @ManyToMany
     private List<SupplierCategory> categories;
-
 
     @OneToMany
     @JsonIgnore
@@ -84,4 +82,47 @@ public class Supplier {
         this.addresses = addresses;
     }
 
+    public static SupplierBuilder builder() {
+        return new SupplierBuilder();
+    }
+    public static final class SupplierBuilder{
+        private final Supplier supplier;
+
+        SupplierBuilder() {
+            supplier = new Supplier();
+        }
+        public SupplierBuilder withId(Long id){
+            supplier.setId(id);
+            return this;
+        }
+        public SupplierBuilder withName(String name){
+            supplier.setName(name);
+            return this;
+        }
+        public SupplierBuilder withNif(int nif){
+            supplier.setNif(nif);
+            return this;
+        }
+        public SupplierBuilder withPhoneNumber(int phoneNumber){
+            supplier.setPhoneNumber(phoneNumber);
+            return this;
+        }
+        public SupplierBuilder withAddress(List<Address> addresses){
+            supplier.setAddresses(addresses);
+            return this;
+        }
+        public SupplierBuilder withSupplierCategory(List<SupplierCategory> supplierCategory){
+            supplier.setCategories(supplierCategory);
+            return this;
+        }
+        public SupplierBuilder withStockRequest(List<StockRequest> stockRequests){
+            supplier.setStockRequests(stockRequests);
+            return this;
+        }
+        public Supplier build(){
+            return supplier;
+        }
+
+
+    }
 }
