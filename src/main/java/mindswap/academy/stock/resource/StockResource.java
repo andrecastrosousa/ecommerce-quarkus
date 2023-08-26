@@ -7,8 +7,12 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import mindswap.academy.item.dto.ItemDto;
 import mindswap.academy.stock.dto.StockDto;
+import mindswap.academy.stock.dto.StockItemDto;
+import mindswap.academy.stock.dto.StockSupplierDto;
 import mindswap.academy.stock.service.StockServiceImp;
+import mindswap.academy.supplier.dto.SupplierDto;
 
 @Path("/")
 public class StockResource {
@@ -19,14 +23,14 @@ public class StockResource {
     @GET
     @Path("items/{itemId}/stock")
     @Produces(MediaType.APPLICATION_JSON)
-    public StockDto getStockFromItemId(@PathParam("itemId") Long itemId){
+    public StockItemDto getStockFromItemId(@PathParam("itemId") Long itemId){
         return stockServiceImp.getByItemId(itemId);
     }
 
     @GET
     @Path("supplier/{supplierId}/stock")
     @Produces(MediaType.APPLICATION_JSON)
-    public StockDto getStockFromSupplierId(@PathParam("supplierId") Long supplierId) {
+    public StockSupplierDto getStockFromSupplierId(@PathParam("supplierId") Long supplierId) {
         return stockServiceImp.getBySupplierId(supplierId);
     }
 
