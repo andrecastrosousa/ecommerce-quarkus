@@ -11,7 +11,7 @@ import mindswap.academy.stock.repository.StockRepository;
 import mindswap.academy.supplier.model.Supplier;
 import mindswap.academy.supplier.repository.SupplierRepository;
 
-public class StockServiceImp {
+public class StockServiceImp implements StockService {
 
     @Inject
     StockRepository stockRepository;
@@ -22,6 +22,7 @@ public class StockServiceImp {
     @Inject
     StockConverter stockConverter;
 
+    @Override
     public StockDto getByItemId(Long itemId) {
         Item existingItem = itemRepository.findByIdOptional(itemId)
                 .orElseThrow(() -> new WebApplicationException("Item not found", 404));
@@ -33,6 +34,7 @@ public class StockServiceImp {
         return stockConverter.fromStock(stock);
     }
 
+    @Override
     public StockDto getBySupplierId(Long supplierId) {
         Supplier supplier = supplierRepository.findByIdOptional(supplierId)
                 .orElseThrow(() -> new WebApplicationException("Supplier not found", 404));
@@ -45,6 +47,7 @@ public class StockServiceImp {
     }
 
 
+    @Override
     public StockDto getItemStockFromSupplier(Long supplierId, Long itemId) {
         Stock stock = stockRepository.findBySupplierIdAndItemId(supplierId, itemId);
         if(stock == null){
