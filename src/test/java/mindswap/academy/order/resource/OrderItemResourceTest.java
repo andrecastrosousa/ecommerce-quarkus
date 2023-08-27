@@ -4,6 +4,7 @@ import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import mindswap.academy.item.model.Item;
+import mindswap.academy.item.model.ItemCategory;
 import mindswap.academy.item.repository.ItemRepository;
 import mindswap.academy.order.dto.OrderAddItemDto;
 import mindswap.academy.order.dto.OrderCreateDto;
@@ -34,9 +35,11 @@ class OrderItemResourceTest {
     @Inject
     OrderRepository orderRepository;
 
-   Item item = Item.builder()
-           .withPrice(20.0).build();
 
+
+    Item item = Item.builder()
+            .withPrice(20.0)
+            .build();
    Order order = Order.builder().build();
     OrderAddItemDto orderAddItemDto = new OrderAddItemDto(item, 10);
     OrderItemUpdateDto orderItemUpdateDto = new OrderItemUpdateDto(item, 5);
@@ -51,7 +54,7 @@ class OrderItemResourceTest {
                 .executeUpdate();
         itemRepository.deleteAll();
         itemRepository.getEntityManager()
-                .createNativeQuery("ALTER TABLE Items AUTO_INCREMENT = 1")
+                .createNativeQuery("ALTER TABLE item AUTO_INCREMENT = 1")
                 .executeUpdate();
         itemRepository.persist(item);
         orderRepository.deleteAll();

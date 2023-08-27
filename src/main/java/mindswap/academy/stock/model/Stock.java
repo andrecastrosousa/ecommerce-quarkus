@@ -20,13 +20,19 @@ public class Stock {
 
     private int quantity;
 
+    public Stock() {
+
+    }
+
+    public Stock(Item item, Supplier supplier, int quantity) {
+        this.item = item;
+        this.supplier = supplier;
+        this.quantity = quantity;
+    }
+
     public Stock(Item item, Supplier supplier) {
         this.item = item;
         this.supplier = supplier;
-    }
-
-    public Stock() {
-
     }
 
     public Long getId() {

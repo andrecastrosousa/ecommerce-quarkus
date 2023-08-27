@@ -34,7 +34,7 @@ public class StockServiceImp implements StockService {
     public StockItemDto getByItemId(Long itemId) {
         Item existingItem = itemRepository.findByIdOptional(itemId)
                 .orElseThrow(() -> new WebApplicationException("Item not found", 404));
-        Stock stock = stockRepository.find("itemId", existingItem.getId()).firstResultOptional()
+        Stock stock = stockRepository.find("item.id", existingItem.getId()).firstResultOptional()
                 .orElse(null);
         if(stock == null){
             throw new WebApplicationException("Item not found", 404);
@@ -46,7 +46,7 @@ public class StockServiceImp implements StockService {
     public StockSupplierDto getBySupplierId(Long supplierId) {
         Supplier supplier = supplierRepository.findByIdOptional(supplierId)
                 .orElseThrow(() -> new WebApplicationException("Supplier not found", 404));
-        Stock stock = stockRepository.find("supplierId", supplier.getId()).firstResultOptional()
+        Stock stock = stockRepository.find("supplier.id", supplier.getId()).firstResultOptional()
                 .orElse(null);
         if(stock == null){
             throw new WebApplicationException("Supplier not found", 404);
