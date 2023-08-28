@@ -16,7 +16,12 @@ public class OrderConverter {
     ObjectMapper objectMapper;
 
     public OrderDto toDto(Order order){
-        return objectMapper.convertValue(order, mindswap.academy.order.dto.OrderDto.class);
+        return new OrderDto(order.getId(),
+                order.getTotal(),
+                order.getOrderDatetime(),
+                order.getOrderItems(),
+                order.getShipping(),
+                order.getPaymentMethod());
     }
 
     public OrderDto toDto(OrderUpdateDto orderUpdateDto){
